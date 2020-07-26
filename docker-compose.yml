@@ -1,0 +1,32 @@
+version: '3'
+services:
+
+############ Node Application Service Container ###################
+ frontend-dev: 
+  stdin_open: true
+  environment:
+      - CHOKIDAR_USEPOLLING=true
+  build:
+    context: ./
+    dockerfile: Dockerfile.dev
+  container_name: frontend-dev
+  image: kyawwanna/frontend:dev
+  volumes:
+       - /app/node_modules
+       - .:/app
+  ports:
+      - "3000:3000"
+  command: npm run start
+ frontend-test: 
+  stdin_open: true
+  environment:
+      - CHOKIDAR_USEPOLLING=true
+  build:
+    context: ./
+    dockerfile: Dockerfile.dev
+  container_name: frontend-test
+  image: kyawwanna/frontend:test
+  volumes:
+       - /app/node_modules
+       - .:/app
+  command: npm run test 
